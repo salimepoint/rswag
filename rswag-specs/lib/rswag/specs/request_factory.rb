@@ -118,11 +118,7 @@ module Rswag
           Rswag::Specs.deprecator.warn('Rswag::Specs: WARNING: basePath is replaced in OpenAPI3! Update your swagger_helper.rb')
         end
 
-        if uses_base_path
-          template = (swagger_doc[:basePath] || '') + metadata[:path_item][:template]
-        else # OpenAPI 3
-          template = base_path_from_servers(swagger_doc) + metadata[:path_item][:template]
-        end
+        template = (swagger_doc[:basePath] || base_path_from_servers(swagger_doc)) + metadata[:path_item][:template]&.rstrip
 
         request[:path] = template.tap do |path_template|
           parameters.select { |p| p[:in] == :path }.each do |p|

@@ -742,6 +742,25 @@ config.after(:each, operation: true, use_as_request_example: true) do |spec|
 end
 ```
 
+In some scenarios it is desirable to have multiple summary entries under a single HTTP verb and request path. For 
+example a patch endpoint that allows for archiving a resource with one payload format and updating the resources with 
+another. To do this add one or more spaces to the end of the request path to create a unique key for the request 
+example(s).
+
+```ruby
+  path '/blogs/{blog_id}' do
+    patch 'Modify a blog' do
+      ...
+    end
+  end
+
+  path '/blogs/{blog_id} ' do
+    patch 'Archive a blog' do
+      ...
+    end
+  end
+```
+
 ### Response headers ###
 
 In Rswag, you could use `header` method inside the response block to specify header objects for this response.

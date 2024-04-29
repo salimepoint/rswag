@@ -685,6 +685,16 @@ module Rswag
           end
         end
 
+        context 'when the spec path ends with spaces to allow multi-use endpoints to be documented' do
+          before do
+            metadata[:path_item][:template] = '/multi-use/endpoint '
+          end
+
+          it 'strips the trailing spaces from the path to ensure a valid request URI' do
+            expect(request[:path]).to eq('/multi-use/endpoint')
+          end
+        end
+
         context 'global consumes' do
           before { openapi_spec[:consumes] = ['application/xml'] }
 
